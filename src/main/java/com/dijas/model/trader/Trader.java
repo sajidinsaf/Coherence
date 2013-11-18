@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
+import com.dijas.model.trade.TradeEntity;
 import com.tangosol.io.pof.PofReader;
 import com.tangosol.io.pof.PofWriter;
 import com.tangosol.io.pof.PortableObject;
 
-public class Trader implements PortableObject {
+public class Trader implements PortableObject, TradeEntity<Trader> {
 
 	public final static long MILLS_IN_YEAR = 1000L * 60L * 60L * 24 * 365;
 	
-	private int id;
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String gender;
@@ -25,7 +26,7 @@ public class Trader implements PortableObject {
 		
 	}
 
-	public Trader(int id, String firstName, String lastName, String gender, Address homeAddress, Address workAddress, Map<String, PhoneNumber> phoneNumbers, Date dateOfBirth) {
+	public Trader(String id, String firstName, String lastName, String gender, Address homeAddress, Address workAddress, Map<String, PhoneNumber> phoneNumbers, Date dateOfBirth) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -38,11 +39,11 @@ public class Trader implements PortableObject {
 	}
 	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -119,7 +120,7 @@ public class Trader implements PortableObject {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(PofReader reader) throws IOException {
-		setId(reader.readInt(0));
+		setId(reader.readString(0));
 		setFirstName(reader.readString(1));
 		setLastName(reader.readString(2));
 		setGender(reader.readString(3));
@@ -131,7 +132,7 @@ public class Trader implements PortableObject {
 
 	@Override
 	public void writeExternal(PofWriter writer) throws IOException {
-		writer.writeInt(0, getId());
+		writer.writeString(0, getId());
 		writer.writeString(1, getFirstName());
 		writer.writeString(2, getLastName());
 		writer.writeString(3, getGender());
@@ -152,7 +153,7 @@ public class Trader implements PortableObject {
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result
 				+ ((homeAddress == null) ? 0 : homeAddress.hashCode());
-		result = prime * result + id;
+		result = prime * result + id.hashCode();
 		result = prime * result
 				+ ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result
@@ -218,6 +219,12 @@ public class Trader implements PortableObject {
 				+ homeAddress + ", workAddress=" + workAddress
 				+ ", phoneNumbers=" + phoneNumbers + ", dateOfBirth="
 				+ dateOfBirth + "]";
+	}
+
+	@Override
+	public Trader getEntiy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

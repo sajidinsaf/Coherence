@@ -19,7 +19,7 @@ public class TraderGenerator {
 		PrintWriter writer = new PrintWriter(new File(fileName));
 		writer.println("First Name,LastName,Gender,DateOfBirth,Home Street,Home PostCode,Home Country,Work Street,Work PostCode,Work Country,Home Phone,Work Phone");
 		
-		for (int i=0; i<25000; i++) {
+		for (int i=0; i<100; i++) {
 			String lastName = getRandomSurname();
 			String firstName = firstNames.get(random(firstNames.size()));
 			String gender = firstName.split("-")[1];

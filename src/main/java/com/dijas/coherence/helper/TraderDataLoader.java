@@ -46,6 +46,8 @@ public class TraderDataLoader {
 		CacheFactory.ensureCluster();
 		NamedCache cache = CacheFactory.getCache("trades");
 		
+		cache.clear();
+		
 		int batchSize = 1024;
 		Map<Integer, Trader> mapBatch = new HashMap<Integer, Trader>(batchSize);
 		
@@ -97,14 +99,14 @@ public class TraderDataLoader {
 		Date dateOfBirth = new Date(Long.parseLong(t[i++]));
 		Address homeAddress = new Address(t[i++], t[i++], t[i++]);
 		Address workAddress = new Address(t[i++], t[i++], t[i++]);
-		PhoneNumber homePhone = new PhoneNumber(t[i++]);
+		PhoneNumber homePhone = new PhoneNumber(t[i++].replaceAll("'", ""));
 		PhoneNumber workPhone = new PhoneNumber(t[i++]);
 		
 		Map<String, PhoneNumber> phoneNumbers = new HashMap<String, PhoneNumber>();
 		phoneNumbers.put("home", homePhone);
 		phoneNumbers.put("work", workPhone);
 		
-		return new Trader(traderId, firstName, lastName, gender, homeAddress, workAddress, phoneNumbers, dateOfBirth);
+		return new Trader(traderId+"", firstName, lastName, gender, homeAddress, workAddress, phoneNumbers, dateOfBirth);
 	}
 
 }
